@@ -73,4 +73,4 @@ echo "   TYPE        =" $TYPE
 echo "   ROC option  =" $ROCOPTION
 echo "   Commandline =" $ARGS
 echo "************************************************************"
-${CODA_ROC} $DEFAULT -type $TYPE -name $ROCNAME -session $SESSION $ROCOPTION
+${CODA_ROC} $DEFAULT -type $TYPE -name $ROCNAME $ROCOPTION
