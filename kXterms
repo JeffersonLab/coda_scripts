@@ -23,7 +23,7 @@ fi
 # Hardcoded CODA_SCRIPTS and CODA_COMPONENT_TABLE
 . ${CODA_SCRIPTS}/coda_conf_functions
 
-TYPES=( "TS" "ROC" "FPGA" "PEB" "SEB" "ER" "DC" )
+TYPES=( "TS" "ROC" "MOLLERADC" "FPGA" "PEB" "SEB" "ER" "DC" )
 
 for type in ${TYPES[@]}
 do
@@ -42,15 +42,14 @@ do
 	    "TS" )
 		KILLSTRING="coda_ts"
 		;;
-	    "ROC" | "FPGA" )
+	    "ROC" | "FPGA" | "MOLLERADC" )
 		KILLSTRING="coda_roc"
 		;;
 	    "PEB" | "ER" | "SEB" | "DC" )
 		KILLSTRING="-f org.jlab.coda.emu.EmuFactory"
 		;;
 	esac
-
-	# now kill the ROC, if it's still runnin gon the remote host
+	# kill the component, if it's still running on the remote host
 	for host in $hosts
 	do
 	    echo "  Killing $type on $host"

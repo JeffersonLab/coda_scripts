@@ -35,6 +35,10 @@ set_xterm_title_cmd() {
 	"FPGA" )
 	    XTERM_COLOR="lightgreen"
 	    ;;
+	"MOLLERADC" )
+	    XTERM_CMD="remote_vme $hostname nobody start$component.sh"
+	    XTERM_COLOR="#c1c6fc"
+	    ;;
 	"TS" )
 	    XTERM_COLOR="yellow"
 	    ;;

@@ -5,25 +5,37 @@
 #     the startCoda script
 #
 
-. coda_conf_functions
+# Hardcoded CODA_SCRIPTS and CODA_COMPONENT_TABLE
+. ${CODA_SCRIPTS}/coda_conf_functions
 
-# Get list of ROC hosts
-coda_conf_get_component_list ROC
-ROC_hosts=${CODA_HOSTNAME_LIST[@]}
+TYPES=( "TS" "ROC" "MOLLERADC" "FPGA" "PEB" "SEB" "ER" "DC" )
 
-# Get list of PEB hosts
-coda_conf_get_component_list PEB
-PEB_hosts=${CODA_HOSTNAME_LIST[@]}
-
-
-# Kill each ROC in the list
-for roc in $ROC_hosts
+for type in ${TYPES[@]}
 do
-    ssh -x $roc killall coda_roc
+    coda_conf_get_component_list $type
+    if [ $? == 1 ] ; then
+	hosts=${CODA_HOSTNAME_LIST[@]}
+
+	case "$type" in
+	    "TS" )
+		KILLSTRING="coda_ts"
+		;;
+	    "ROC" | "FPGA" | "MOLLERADC" )
+		KILLSTRING="coda_roc"
+		;;
+	    "PEB" | "ER" | "SEB" | "DC" )
+		KILLSTRING="-f org.jlab.coda.emu.EmuFactory"
+		;;
+	esac
+
+	# kill the component, if it's still running on the remote host
+	for host in $hosts
+	do
+	    echo "  Killing $type on $host"
+	    ssh -x -f $host pkill $KILLSTRING
+	done
+    fi
+
 done
 
-# Kill each PEB in the list
-for peb in $PEB_hosts
-do
-    ssh -x $peb pkill -f org.jlab.coda.emu.EmuFactory
-done
+exit

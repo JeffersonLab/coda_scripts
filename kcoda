@@ -7,10 +7,5 @@
 echo "Killing rcgui"
 pkill -U $UID -f org.jlab.coda.afecs.ui.rcgui.RcGuiApplication
 
-# PEBs and ROCs
-kill_remotes.sh
-
-
-# PLATFORM
-#echo "Killing platform"
-#pkill -f org.jlab.coda.afecs.platform.APlatform
+# Xterms + components
+kXterms

@@ -34,23 +34,11 @@ if [ "$TEST" == "0" ]; then
     kXterms
 fi
 
-# Launch the FPGAs
-launch_xterm_group FPGA $last_xpos ${DEF_XINCR} $last_ypos ${DEF_YINCR} ${DEF_YSIZE}
+TYPES=( "TS" "ROC" "MOLLERADC" "FPGA" "PEB" "SEB" "ER" "DC" )
 
-# Launch the ROCs
-launch_xterm_group ROC $last_xpos  ${DEF_XINCR} $last_ypos ${DEF_YINCR} ${DEF_YSIZE}
+for type in ${TYPES[@]}
+do
+    launch_xterm_group $type $last_xpos ${DEF_XINCR} $last_ypos ${DEF_YINCR} ${DEF_YSIZE}
+done
 
-# Launch the PEBs
-launch_xterm_group PEB $last_xpos ${DEF_XINCR} $last_ypos ${DEF_YINCR} ${DEF_YSIZE}
-
-# Launch the SEBs
-launch_xterm_group SEB $last_xpos ${DEF_XINCR} $last_ypos ${DEF_YINCR} ${DEF_YSIZE}
-
-# Launch the ERs
-launch_xterm_group ER $last_xpos ${DEF_XINCR} $last_ypos ${DEF_YINCR} ${DEF_YSIZE}
-
-# Launch the DCs
-launch_xterm_group DC $last_xpos ${DEF_XINCR} $last_ypos ${DEF_YINCR} ${DEF_YSIZE}
-
-# Launch the TSs
-launch_xterm_group TS $last_xpos ${DEF_XINCR} $last_ypos ${DEF_YINCR} ${DEF_YSIZE}
+exit
